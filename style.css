@@ -335,7 +335,7 @@
             height: 80px;
             margin: 0 auto 1.5rem;
             background: linear-gradient(45deg, var(--accent-color), #ff4466);
-            border-radius: 50%;
+           
             display: flex;
             align-items: center;
             justify-content: center;
@@ -439,12 +439,12 @@
             opacity: 1;
         }
         .testimonial-slide img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
+            width: 500px;
+            height: 500px;
+          
             object-fit: cover;
             margin-bottom: 1.2rem;
-            border: 3px solid var(--accent-color);
+            border: 1px solid var(--accent-color);
             box-shadow: var(--shadow);
         }
         .testimonial-slide p {
@@ -467,6 +467,7 @@
         .best-carousel {
             position: relative;
             max-width: 600px;
+            max-height: 700px;
             margin: 2rem auto 0 auto;
             overflow: hidden;
             text-align: center;
@@ -484,8 +485,8 @@
             opacity: 1;
         }
         .best-slide img {
-            width: 260px;
-            height: 260px;
+            width: 500px;
+            height: 790px;
             border-radius: 16px;
             object-fit: cover;
             margin-bottom: 1.2rem;
