@@ -293,3 +293,64 @@
                 showBestSlide(bestIndex);
             }, 3500);
         })();
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- PASTE YOUR WEB APP URL HERE ---
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwMIF8bMxis0NJk5ImB2suZf6Ei4WSWF7vm3uJMIBkRZxFvI51krZpHYw3YvJFZazxafw/exec';
+            
+            const form = document.getElementById('bookingForm');
+            const submitButton = document.getElementById('submitButton');
+            const formMessage = document.getElementById('formMessage');
+        
+            // Set minimum date for the date picker to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('preferredDate').setAttribute('min', today);
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Disable button and show loading text
+                submitButton.disabled = true;
+                submitButton.textContent = 'Booking...';
+                
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                
+                fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors', // Important for cross-origin requests
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    redirect: 'follow'
+                })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.status === 'success') {
+                        showMessage('success', '🎉 Success! Your booking is confirmed. Please check your email.');
+                        form.reset();
+                    } else {
+                        throw new Error(response.message || 'An unknown error occurred.');
+                    }
+                })
+                .catch(error => {
+                    showMessage('error', `😥 Oops! Something went wrong. ${error.message}`);
+                })
+                .finally(() => {
+                    // Re-enable button
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Book Now';
+                });
+            });
+        
+            function showMessage(type, message) {
+                formMessage.textContent = message;
+                formMessage.className = type; // 'success' or 'error'
+                
+                // Hide the message after 6 seconds
+                setTimeout(() => {
+                    formMessage.className = 'hidden';
+                }, 6000);
+            }
+        });
